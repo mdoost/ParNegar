@@ -7,11 +7,13 @@ using ParNegar.API.Middleware;
 using ParNegar.Application.Common;
 using ParNegar.Application.Interfaces.Services;
 using ParNegar.Application.Interfaces.Services.Auth;
+using ParNegar.Application.Interfaces.Services.Core;
 using ParNegar.Domain.Interfaces;
 using ParNegar.Infrastructure.Data;
 using ParNegar.Infrastructure.Repositories;
 using ParNegar.Infrastructure.Services;
 using ParNegar.Infrastructure.Services.Auth;
+using ParNegar.Infrastructure.Services.Core;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -106,6 +108,9 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+// Application Services (Core Schema)
+builder.Services.AddScoped<IBranchService, BranchService>();
 
 // Mapster (uses default global config)
 // TypeAdapterConfig.GlobalSettings.Default.PreserveReference(true);

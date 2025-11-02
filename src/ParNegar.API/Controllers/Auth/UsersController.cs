@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParNegar.Application.Interfaces.Services.Auth;
 using ParNegar.Shared.DTOs.Auth;
@@ -8,6 +9,7 @@ namespace ParNegar.API.Controllers.Auth;
 /// Users management controller
 /// Route: /api/Auth/Users
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/Auth/[controller]")]
 public class UsersController : ControllerBase
