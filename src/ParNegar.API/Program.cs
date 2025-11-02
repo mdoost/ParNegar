@@ -161,10 +161,23 @@ using (var scope = app.Services.CreateScope())
 
 // ===== Middleware Pipeline =====
 // ⚠️ ترتیب Middleware ها بسیار مهم است!
-// 1. Global Exception Handler - برای گرفتن تمام خطاها
+
+// 1. Request Logging - اولین middleware برای لاگ کامل درخواست‌ها
+app.UseRequestLogging();
+
+// 2. Global Exception Handler - برای گرفتن تمام خطاها
 app.UseGlobalExceptionHandler();
 
-// 2. Swagger
+// 3. Session Validation - بررسی Token Blacklist قبل از Authentication
+app.UseSessionValidation();
+
+// 4. File Upload Validation - اعتبارسنجی امنیتی فایل‌های آپلود شده
+app.UseFileUploadValidation();
+
+// 5. File Upload Rate Limiting - محدودسازی تعداد آپلود
+app.UseFileUploadRateLimiting();
+
+// 6. Swagger
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
@@ -175,19 +188,16 @@ app.UseSwaggerUI(options =>
     options.EnableTryItOutByDefault();
 });
 
-// 3. Request Logging - برای لاگ کردن تمام درخواست‌ها
+// 7. Serilog Request Logging (ساده‌تر از RequestLoggingMiddleware)
 app.UseSerilogRequestLogging();
 
-// 4. Session Validation - بررسی Token Blacklist قبل از Authentication
-app.UseSessionValidation();
-
-// 5. HTTPS Redirection
+// 8. HTTPS Redirection
 app.UseHttpsRedirection();
 
-// 6. CORS
+// 9. CORS
 app.UseCors();
 
-// 7. Authentication & Authorization
+// 10. Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
